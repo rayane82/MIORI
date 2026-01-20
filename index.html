@@ -262,6 +262,46 @@
                 longDesc: "Ce mini masque est le secret d'une peau radieuse en toutes circonstances. Sa formule concentrée pénètre instantanément pour restaurer l'éclat et la douceur de votre visage.",
                 price: 12, 
                 image: "https://i.postimg.cc/LXrxQJC2/unnamed-(20)-Photoroom-(1).png" 
+            },
+            { 
+                id: 4, 
+                name: "Collier Kasumi", 
+                desc: "Éclat céleste et délicatesse.", 
+                longDesc: "Inspiré par la brume matinale, le Collier Kasumi est une pièce d'une finesse rare. Un hommage à la beauté discrète et au raffinement japonais.",
+                price: 45, 
+                image: "https://i.postimg.cc/3NG9p3Z1/unnamed-(21)-Photoroom.png" 
+            },
+            { 
+                id: 5, 
+                name: "Boucles Selma", 
+                desc: "Raffinement pour vos soirées.", 
+                longDesc: "Les boucles Selma marient modernité et élégance classique. Leur design épuré en fait l'accessoire parfait pour sublimer n'importe quel rituel de beauté.",
+                price: 39, 
+                image: "https://i.postimg.cc/tghXr6Cx/unnamed-(22)-Photoroom.png" 
+            },
+            { 
+                id: 6, 
+                name: "Mini Box K-Beauty Avocado", 
+                desc: "Nutrition intense et douceur.", 
+                longDesc: "Un coffret concentré de bienfaits. L'avocat nourrit votre peau en profondeur pour un teint revitalisé et une douceur incomparable.",
+                price: 59, 
+                image: "https://i.postimg.cc/FR3Dk9pk/unnamed-(23)-Photoroom.png" 
+            },
+            { 
+                id: 7, 
+                name: "Mini Box K-Beauty Peach", 
+                desc: "Éclat fruité et fraîcheur.", 
+                longDesc: "Retrouvez l'éclat d'un teint de pêche. Cette mini box est le rituel idéal pour une peau fraîche, hydratée et délicatement parfumée.",
+                price: 59, 
+                image: "https://i.postimg.cc/FHzpgbGv/unnamed-(24)-Photoroom.png" 
+            },
+            { 
+                id: 8, 
+                name: "Sakura Silk Cream", 
+                desc: "L'onctuosité de la soie.", 
+                longDesc: "Une crème onctueuse infusée aux fleurs de cerisier. Sa texture soyeuse enveloppe la peau d'un voile d'hydratation et de douceur.",
+                price: 49, 
+                image: "https://i.postimg.cc/RZm6vv6X/unnamed-(25)-Photoroom.png" 
             }
         ];
 
@@ -399,7 +439,7 @@
                             <section class="container mx-auto px-6 mb-32">
                                 <h3 class="text-xs uppercase tracking-[0.5em] text-center mb-16 opacity-50 font-bold">Nos Essentiels</h3>
                                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                                    ${this.renderProductGrid(PRODUCTS)}
+                                    ${this.renderProductGrid(PRODUCTS.slice(0, 3))}
                                 </div>
                                 <div class="mt-16 text-center">
                                     <button onclick="app.navigate('shop')" class="text-[10px] uppercase tracking-widest font-bold border-b border-black pb-2 hover:opacity-50 transition">Voir toute la boutique</button>
