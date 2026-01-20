@@ -241,51 +241,27 @@
         const PRODUCTS = [
             { 
                 id: 1, 
-                name: "Sérum Sakura Éclat", 
-                desc: "Un sérum léger infusé de fleurs de cerisier pour une peau radieuse et apaisée.", 
-                longDesc: "Notre Sérum Sakura Éclat utilise les propriétés antioxydantes des fleurs de cerisier japonais pour restaurer l'éclat naturel de votre peau. Sa texture fluide pénètre instantanément pour hydrater en profondeur et affiner le grain de peau.",
-                price: 380, 
-                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800" 
+                name: "Bague Nami", 
+                desc: "Élégance marine et pureté.", 
+                longDesc: "La Bague Nami capture le mouvement fluide des vagues japonaises. Conçue pour celles qui cherchent une pièce à la fois forte et délicate, elle incarne la sérénité de l'océan.",
+                price: 39, 
+                image: "https://i.postimg.cc/vZddgjXS/Gemini-Generated-Image-zdtqa6zdtqa6zdtq-Photoroom.png" 
             },
             { 
                 id: 2, 
-                name: "Essence de Thé Vert", 
-                desc: "Soin purifiant et antioxydant pour un teint frais au quotidien.", 
-                longDesc: "L'Essence de Thé Vert MIORI est un concentré de pureté. Réputé pour ses vertus détoxifiantes, le thé vert japonais aide à protéger la peau des agressions extérieures tout en resserrant les pores.",
-                price: 450, 
-                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800" 
+                name: "Bague Chiyo", 
+                desc: "Finesse ancestrale et éclat discret.", 
+                longDesc: "Hommage à l'éternité, la Bague Chiyo se distingue par son design intemporel. Un bijou minimaliste qui s'adapte parfaitement à chaque moment de votre vie.",
+                price: 35, 
+                image: "https://i.postimg.cc/Bv0Dzqpy/unnamed-(18)-Photoroom.png" 
             },
             { 
                 id: 3, 
-                name: "Brume d'Hokkaido", 
-                desc: "Hydratation instantanée inspirée des sources thermales du nord.", 
-                longDesc: "Inspirée par la pureté des sources d'Hokkaido, cette brume rafraîchissante est idéale pour fixer le maquillage ou s'offrir un moment de fraîcheur à tout moment de la journée.",
-                price: 220, 
-                image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=800" 
-            },
-            { 
-                id: 4, 
-                name: "Huile Soyeuse au Riz", 
-                desc: "Nutrition profonde et éclat satiné pour le visage et le décolleté.", 
-                longDesc: "L'huile de son de riz est le secret ancestral des femmes japonaises. Riche en vitamines E et en acides gras essentiels, elle nourrit intensément sans laisser de film gras.",
-                price: 520, 
-                image: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=800" 
-            },
-            { 
-                id: 5, 
-                name: "Masque Zen à l'Argile", 
-                desc: "Rituel hebdomadaire pour une peau purifiée et un esprit calme.", 
-                longDesc: "Ce masque onctueux combine l'argile blanche purifiante et des extraits de camélia apaisants. Un véritable moment de méditation pour votre peau et votre esprit.",
-                price: 310, 
-                image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?q=80&w=800" 
-            },
-            { 
-                id: 6, 
-                name: "Baume Kyōto", 
-                desc: "Soin protecteur pour les zones sèches, parfum délicat.", 
-                longDesc: "Le Baume Kyōto est votre compagnon de voyage idéal. Sa formule riche et onctueuse répare les lèvres et les mains sèches tout en laissant un sillage discret de bois de santal.",
-                price: 150, 
-                image: "https://images.unsplash.com/photo-1601612620443-8ee33141df42?q=80&w=800" 
+                name: "Mini Masque hydratant", 
+                desc: "Hydratation instantanée en format voyage.", 
+                longDesc: "Ce mini masque est le secret d'une peau radieuse en toutes circonstances. Sa formule concentrée pénètre instantanément pour restaurer l'éclat et la douceur de votre visage.",
+                price: 12, 
+                image: "https://i.postimg.cc/LXrxQJC2/unnamed-(20)-Photoroom-(1).png" 
             }
         ];
 
@@ -423,7 +399,7 @@
                             <section class="container mx-auto px-6 mb-32">
                                 <h3 class="text-xs uppercase tracking-[0.5em] text-center mb-16 opacity-50 font-bold">Nos Essentiels</h3>
                                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                                    ${this.renderProductGrid(PRODUCTS.slice(0, 3))}
+                                    ${this.renderProductGrid(PRODUCTS)}
                                 </div>
                                 <div class="mt-16 text-center">
                                     <button onclick="app.navigate('shop')" class="text-[10px] uppercase tracking-widest font-bold border-b border-black pb-2 hover:opacity-50 transition">Voir toute la boutique</button>
