@@ -17,7 +17,7 @@
             --miori-bg-logo: #faf6f2;
             --miori-btn: #d8d2ce;
             --miori-accent: #ab9083;
-            --miori-sakura: #FCE4EC;
+            --miori-sakura: #FFB7C5; /* Couleur Sakura un peu plus vive */
             --miori-gold: #D4AF37;
         }
 
@@ -51,7 +51,7 @@
             position: absolute;
             background-color: var(--miori-sakura);
             border-radius: 150% 0 150% 0;
-            opacity: 0.6;
+            opacity: 0.7; /* Légère augmentation de l'opacité pour plus de visibilité */
             pointer-events: none;
             z-index: 1;
             animation: fall linear infinite;
@@ -59,7 +59,7 @@
 
         @keyframes fall {
             0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
+            10% { opacity: 0.7; }
             100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0; }
         }
 
