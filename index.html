@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIORI | Moments made yours</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --miori-dark: #121212;
+            --miori-bg-logo: #faf6f2;
+            --miori-btn: #d8d2ce;
+            --miori-accent: #ab9083;
+            --miori-sakura: #FCE4EC;
+            --miori-gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdfcfb;
+            color: var(--miori-dark);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        header, footer {
+            background-color: var(--miori-bg-logo) !important;
+        }
+
+        .view-transition {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sakura Decorations */
+        .sakura-petal {
+            position: absolute;
+            background-color: var(--miori-sakura);
+            border-radius: 150% 0 150% 0;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .sakura-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* UI Elements */
+        .btn-miori {
+            background-color: var(--miori-btn);
+            color: var(--miori-dark);
+            padding: 0.8rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid var(--miori-btn);
+        }
+
+        .btn-miori:hover {
+            background-color: transparent;
+            color: var(--miori-dark);
+        }
+
+        .btn-whatsapp {
+            background-color: var(--miori-accent);
+            color: white;
+            transition: opacity 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            opacity: 0.9;
+        }
+
+        .cart-badge {
+            background-color: var(--miori-btn);
+            color: var(--miori-dark);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 99px;
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            font-weight: 600;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--miori-dark);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .product-card img {
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .sakura-illustration {
+            position: absolute;
+            width: 150px;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--miori-dark); }
+
+        .text-accent {
+            color: var(--miori-accent);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Petals Background -->
+    <div class="sakura-bg" id="sakura-container"></div>
+
+    <!-- HEADER -->
+    <header class="fixed w-full top-0 z-50 border-b border-black/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="javascript:void(0)" onclick="app.navigate('home')" class="flex items-center">
+                <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-14 md:h-16">
+            </a>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-10 text-[11px] uppercase tracking-[0.2em] font-medium">
+                <a href="javascript:void(0)" onclick="app.navigate('home')" class="nav-link">Accueil</a>
+                <a href="javascript:void(0)" onclick="app.navigate('shop')" class="nav-link">Boutique</a>
+                <a href="javascript:void(0)" onclick="app.navigate('about')" class="nav-link">À Propos</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-6">
+                <a href="javascript:void(0)" onclick="app.navigate('cart')" class="relative hover:opacity-70 transition text-accent">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </a>
+                <button class="md:hidden" onclick="app.toggleMenu()">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#faf6f2] border-b border-black/5 py-8 px-10 space-y-6">
+            <a href="javascript:void(0)" onclick="app.navigate('home')" class="block uppercase tracking-[0.2em] text-xs">Accueil</a>
+            <a href="javascript:void(0)" onclick="app.navigate('shop')" class="block uppercase tracking-[0.2em] text-xs">Boutique</a>
+            <a href="javascript:void(0)" onclick="app.navigate('about')" class="block uppercase tracking-[0.2em] text-xs">À Propos</a>
+            <a href="javascript:void(0)" onclick="app.navigate('cart')" class="block uppercase tracking-[0.2em] text-xs">Panier</a>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main id="app-view" class="flex-grow pt-28 md:pt-36 pb-16 relative z-10">
+        <!-- Content injected here -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+                <div class="md:col-span-2">
+                    <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-12 mb-6 mx-auto md:mx-0">
+                    <p class="text-sm text-gray-500 italic max-w-xs mx-auto md:mx-0 uppercase tracking-widest">moments made yours</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Navigation</h4>
+                    <ul class="text-xs space-y-4 text-gray-600">
+                        <li><a href="#" onclick="app.navigate('home')" class="hover:text-black">Accueil</a></li>
+                        <li><a href="#" onclick="app.navigate('shop')" class="hover:text-black">Boutique</a></li>
+                        <li><a href="#" onclick="app.navigate('about')" class="hover:text-black">Philosophie</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Contact</h4>
+                    <ul class="text-xs space-y-4 text-gray-600">
+                        <li><a href="https://wa.me/212770216781" class="hover:text-black">+212 770216781</a></li>
+                        <li><a href="#" class="hover:text-black">Instagram</a></li>
+                        <li><p>&copy; 2026 MIORI. Tous droits réservés.</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- APP SCRIPT -->
+    <script>
+        const WHATSAPP_NUMBER = "212770216781";
+
+        const PRODUCTS = [
+            { 
+                id: 1, 
+                name: "Sérum Sakura Éclat", 
+                desc: "Un sérum léger infusé de fleurs de cerisier pour une peau radieuse et apaisée.", 
+                longDesc: "Notre Sérum Sakura Éclat utilise les propriétés antioxydantes des fleurs de cerisier japonais pour restaurer l'éclat naturel de votre peau. Sa texture fluide pénètre instantanément pour hydrater en profondeur et affiner le grain de peau.",
+                price: 380, 
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800" 
+            },
+            { 
+                id: 2, 
+                name: "Essence de Thé Vert", 
+                desc: "Soin purifiant et antioxydant pour un teint frais au quotidien.", 
+                longDesc: "L'Essence de Thé Vert MIORI est un concentré de pureté. Réputé pour ses vertus détoxifiantes, le thé vert japonais aide à protéger la peau des agressions extérieures tout en resserrant les pores.",
+                price: 450, 
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800" 
+            },
+            { 
+                id: 3, 
+                name: "Brume d'Hokkaido", 
+                desc: "Hydratation instantanée inspirée des sources thermales du nord.", 
+                longDesc: "Inspirée par la pureté des sources d'Hokkaido, cette brume rafraîchissante est idéale pour fixer le maquillage ou s'offrir un moment de fraîcheur à tout moment de la journée.",
+                price: 220, 
+                image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=800" 
+            },
+            { 
+                id: 4, 
+                name: "Huile Soyeuse au Riz", 
+                desc: "Nutrition profonde et éclat satiné pour le visage et le décolleté.", 
+                longDesc: "L'huile de son de riz est le secret ancestral des femmes japonaises. Riche en vitamines E et en acides gras essentiels, elle nourrit intensément sans laisser de film gras.",
+                price: 520, 
+                image: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=800" 
+            },
+            { 
+                id: 5, 
+                name: "Masque Zen à l'Argile", 
+                desc: "Rituel hebdomadaire pour une peau purifiée et un esprit calme.", 
+                longDesc: "Ce masque onctueux combine l'argile blanche purifiante et des extraits de camélia apaisants. Un véritable moment de méditation pour votre peau et votre esprit.",
+                price: 310, 
+                image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?q=80&w=800" 
+            },
+            { 
+                id: 6, 
+                name: "Baume Kyōto", 
+                desc: "Soin protecteur pour les zones sèches, parfum délicat.", 
+                longDesc: "Le Baume Kyōto est votre compagnon de voyage idéal. Sa formule riche et onctueuse répare les lèvres et les mains sèches tout en laissant un sillage discret de bois de santal.",
+                price: 150, 
+                image: "https://images.unsplash.com/photo-1601612620443-8ee33141df42?q=80&w=800" 
+            }
+        ];
+
+        const app = {
+            cart: JSON.parse(localStorage.getItem('miori_cart_2026')) || [],
+            currentView: 'home',
+            currentParams: {},
+
+            init() {
+                this.navigate('home');
+                this.updateCartUI();
+                this.createSakuraPetals();
+            },
+
+            createSakuraPetals() {
+                const container = document.getElementById('sakura-container');
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const petal = document.createElement('div');
+                        petal.className = 'sakura-petal';
+                        petal.style.left = Math.random() * 100 + 'vw';
+                        petal.style.width = (Math.random() * 10 + 5) + 'px';
+                        petal.style.height = (Math.random() * 10 + 5) + 'px';
+                        petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                        container.appendChild(petal);
+                        
+                        petal.addEventListener('animationend', () => petal.remove());
+                    }, i * 800);
+                }
+                setInterval(() => {
+                    const petal = document.createElement('div');
+                    petal.className = 'sakura-petal';
+                    petal.style.left = Math.random() * 100 + 'vw';
+                    const size = Math.random() * 10 + 5;
+                    petal.style.width = size + 'px';
+                    petal.style.height = size + 'px';
+                    petal.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                    container.appendChild(petal);
+                    petal.addEventListener('animationend', () => petal.remove());
+                }, 3000);
+            },
+
+            toggleMenu() {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            },
+
+            navigate(view, params = {}) {
+                this.currentView = view;
+                this.currentParams = params;
+                document.getElementById('mobile-menu').classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                this.render();
+            },
+
+            addToCart(productId) {
+                const product = PRODUCTS.find(p => p.id === productId);
+                const existing = this.cart.find(item => item.id === productId);
+                if (existing) existing.qty += 1;
+                else this.cart.push({ ...product, qty: 1 });
+                
+                this.saveCart();
+                this.updateCartUI();
+                
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-10 right-10 bg-black text-white px-6 py-3 text-xs uppercase tracking-widest z-[100] view-transition';
+                notification.innerText = "Ajouté au panier";
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 2000);
+            },
+
+            removeFromCart(productId) {
+                this.cart = this.cart.filter(item => item.id !== productId);
+                this.saveCart();
+                this.updateCartUI();
+                this.render();
+            },
+
+            saveCart() {
+                localStorage.setItem('miori_cart_2026', JSON.stringify(this.cart));
+            },
+
+            updateCartUI() {
+                const count = this.cart.reduce((acc, item) => acc + item.qty, 0);
+                document.getElementById('cart-count').innerText = count;
+            },
+
+            calculateTotal() {
+                return this.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            },
+
+            sendWhatsApp() {
+                if (this.cart.length === 0) return alert("Votre panier est vide.");
+                let message = "Commande MIORI ✨\n\n";
+                this.cart.forEach(item => {
+                    message += `• ${item.qty} x ${item.name} - ${item.price * item.qty} MAD\n`;
+                });
+                message += `\nTotal : ${this.calculateTotal()} MAD\n\nMerci de traiter ma commande !`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+            },
+
+            render() {
+                const viewEl = document.getElementById('app-view');
+                viewEl.innerHTML = '';
+                const container = document.createElement('div');
+                container.className = 'view-transition';
+
+                switch(this.currentView) {
+                    case 'home':
+                        container.innerHTML = `
+                            <section class="h-[85vh] flex items-center justify-start relative overflow-hidden mb-20">
+                                <img src="https://i.postimg.cc/cHChLx3L/Gemini-Generated-Image-q1gfmtq1gfmtq1gf-Photoroom.png" class="absolute inset-0 w-full h-full object-cover z-0" alt="Hero">
+                                <div class="container mx-auto px-6 relative z-10 flex flex-col items-start mt-24">
+                                    <div class="max-w-xl text-left">
+                                        <p class="text-[10px] uppercase tracking-[0.4em] mb-4 opacity-70 font-medium">Japanese-Inspired lifestyle</p>
+                                        <h2 class="text-3xl md:text-5xl serif mb-10 italic leading-tight">A lifestyle made for you</h2>
+                                        <button onclick="app.navigate('shop')" class="btn-miori shadow-2xl scale-110 hover:scale-115 transition-transform origin-left">Explorer la Collection</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="container mx-auto px-6 mb-32">
+                                <div class="max-w-2xl mx-auto text-center relative">
+                                    <h2 class="text-3xl md:text-4xl serif mb-10">L'esthétique de l'instant.</h2>
+                                    <p class="text-gray-500 leading-loose text-sm mb-12">
+                                        Inspiré par le Wabi-Sabi, MIORI célèbre l'imperfection et la beauté éphémère. Chaque produit est une invitation à ralentir, à respirer et à s'approprier son propre rituel de beauté.
+                                    </p>
+                                    <div class="flex justify-center space-x-12 opacity-30">
+                                        <i class="fa-solid fa-leaf text-2xl"></i>
+                                        <i class="fa-solid fa-wind text-2xl"></i>
+                                        <i class="fa-solid fa-spa text-2xl"></i>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="container mx-auto px-6 mb-32">
+                                <h3 class="text-xs uppercase tracking-[0.5em] text-center mb-16 opacity-50 font-bold">Nos Essentiels</h3>
+                                <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                                    ${this.renderProductGrid(PRODUCTS.slice(0, 3))}
+                                </div>
+                                <div class="mt-16 text-center">
+                                    <button onclick="app.navigate('shop')" class="text-[10px] uppercase tracking-widest font-bold border-b border-black pb-2 hover:opacity-50 transition">Voir toute la boutique</button>
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'shop':
+                        container.innerHTML = `
+                            <section class="container mx-auto px-6">
+                                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 border-b border-black/5 pb-10">
+                                    <div>
+                                        <h1 class="text-4xl md:text-5xl serif mb-4">La Boutique</h1>
+                                        <p class="text-gray-400 text-xs tracking-widest uppercase">Pureté & Équilibre</p>
+                                    </div>
+                                    <div class="mt-8 md:mt-0 max-w-xs w-full">
+                                        <div class="relative">
+                                            <input type="text" id="shop-search" onkeyup="app.filterProducts()" placeholder="Rechercher..." 
+                                                class="w-full bg-transparent border-b border-black/10 focus:border-black outline-none py-2 text-sm tracking-widest font-light">
+                                            <i class="fa-solid fa-magnifying-glass absolute right-0 bottom-3 text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-16 md:gap-x-12 md:gap-y-24">
+                                    ${this.renderProductGrid(PRODUCTS)}
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'product':
+                        const p = PRODUCTS.find(item => item.id === this.currentParams.id);
+                        if(!p) { this.navigate('shop'); return; }
+                        container.innerHTML = `
+                            <section class="container mx-auto px-6 py-10">
+                                <button onclick="app.navigate('shop')" class="text-[10px] uppercase tracking-[0.2em] mb-12 flex items-center space-x-2 hover:opacity-50 transition">
+                                    <i class="fa-solid fa-arrow-left"></i> <span>Retour Boutique</span>
+                                </button>
+                                <div class="flex flex-col md:flex-row gap-16 lg:gap-24 items-start">
+                                    <div class="w-full md:w-1/2 aspect-[4/5] bg-gray-50 overflow-hidden relative">
+                                        <img src="${p.image}" class="w-full h-full object-cover" alt="${p.name}">
+                                        <svg viewBox="0 0 100 100" class="sakura-illustration bottom-4 right-4 text-pink-100">
+                                            <path fill="currentColor" d="M50 0 C55 20 80 30 100 30 C80 35 70 60 70 80 C65 60 40 50 20 50 C40 45 50 20 50 0"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="w-full md:w-1/2">
+                                        <h1 class="text-4xl md:text-5xl serif mb-4">${p.name}</h1>
+                                        <p class="text-2xl font-light mb-8">${p.price} MAD</p>
+                                        <div class="border-t border-b border-black/5 py-10 mb-10">
+                                            <h3 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-4">Description</h3>
+                                            <p class="text-gray-500 text-sm leading-relaxed">${p.longDesc}</p>
+                                        </div>
+                                        <button onclick="app.addToCart(${p.id})" class="btn-miori w-full md:w-auto px-16 py-5">Ajouter au Panier</button>
+                                        
+                                        <div class="mt-16 space-y-6">
+                                            <div class="flex items-center space-x-4 opacity-40">
+                                                <i class="fa-solid fa-truck-fast text-lg"></i>
+                                                <span class="text-[10px] uppercase tracking-widest font-bold">Livraison express au Maroc</span>
+                                            </div>
+                                            <div class="flex items-center space-x-4 opacity-40">
+                                                <i class="fa-solid fa-shield-halved text-lg"></i>
+                                                <span class="text-[10px] uppercase tracking-widest font-bold">Paiement à la livraison</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'about':
+                        container.innerHTML = `
+                            <section class="container mx-auto px-6 py-20 max-w-5xl">
+                                <div class="flex flex-col md:flex-row items-center gap-16">
+                                    <div class="w-full md:w-1/2 relative">
+                                        <img src="https://images.unsplash.com/photo-1515377662630-cd495957d073?q=80&w=1000" class="w-full grayscale shadow-sm" alt="MIORI Spirit">
+                                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-[#faf6f2] p-6 flex items-center justify-center border border-black/5">
+                                            <span class="serif text-4xl opacity-20">禪</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-1/2">
+                                        <h2 class="text-4xl serif mb-8 italic">Le Zen au quotidien.</h2>
+                                        <p class="text-gray-600 text-sm leading-loose mb-8">
+                                            MIORI est né d'un désir de simplification. Dans un monde qui va toujours plus vite, nous avons choisi de revenir à l'essentiel : des ingrédients naturels, des formulations respectueuses et une esthétique apaisante.
+                                        </p>
+                                        <p class="text-gray-600 text-sm leading-loose mb-10">
+                                            Nos rituels sont conçus à Casablanca mais puisent leur âme dans le minimalisme japonais. Pour nous, 2026 marque une nouvelle étape dans notre engagement pour une beauté durable et consciente.
+                                        </p>
+                                        <button onclick="app.navigate('shop')" class="text-[10px] uppercase tracking-[0.3em] font-bold border-b border-black pb-2">Notre Collection</button>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'cart':
+                        container.innerHTML = `
+                            <section class="container mx-auto px-6 max-w-3xl">
+                                <h1 class="text-4xl serif mb-16 text-center">Votre Panier</h1>
+                                ${this.cart.length === 0 ? `
+                                    <div class="text-center py-32">
+                                        <p class="text-gray-400 text-xs uppercase tracking-[0.3em] mb-10">Votre sac est vide</p>
+                                        <button onclick="app.navigate('shop')" class="btn-miori">Continuer mes achats</button>
+                                    </div>
+                                ` : `
+                                    <div class="space-y-12 mb-16">
+                                        ${this.cart.map(item => `
+                                            <div class="flex items-center space-x-6 md:space-x-10 border-b border-black/5 pb-10">
+                                                <div class="w-24 h-24 md:w-32 md:h-32 bg-gray-50 flex-shrink-0">
+                                                    <img src="${item.image}" class="w-full h-full object-cover grayscale-[30%]" alt="${item.name}">
+                                                </div>
+                                                <div class="flex-grow">
+                                                    <h3 class="font-bold text-xs uppercase tracking-widest mb-1">${item.name}</h3>
+                                                    <p class="text-xs text-gray-500 mb-4">${item.price} MAD</p>
+                                                    <div class="flex items-center space-x-4">
+                                                        <button onclick="app.removeFromCart(${item.id})" class="text-[10px] uppercase tracking-widest font-bold opacity-30 hover:opacity-100 transition">Supprimer</button>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-bold text-sm">${item.price * item.qty} MAD</p>
+                                                    <p class="text-[10px] text-gray-400 mt-1">Qté: ${item.qty}</p>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="bg-gray-50 p-10 space-y-6">
+                                        <div class="flex justify-between items-center text-sm uppercase tracking-widest font-bold">
+                                            <span>Total</span>
+                                            <span>${this.calculateTotal()} MAD</span>
+                                        </div>
+                                        <button onclick="app.sendWhatsApp()" class="btn-whatsapp w-full py-5 flex items-center justify-center space-x-3 uppercase tracking-[0.2em] text-xs font-bold hover:opacity-90 transition shadow-lg shadow-green-200/50">
+                                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                                            <span>Finaliser sur WhatsApp</span>
+                                        </button>
+                                    </div>
+                                `}
+                            </section>
+                        `;
+                        break;
+                }
+                viewEl.appendChild(container);
+            },
+
+            renderProductGrid(products) {
+                return products.map(p => `
+                    <div class="product-card group cursor-pointer" onclick="app.navigate('product', { id: ${p.id} })">
+                        <div class="aspect-[4/5] bg-gray-50 overflow-hidden mb-6 relative">
+                            <img src="${p.image}" class="w-full h-full object-cover" alt="${p.name}">
+                            <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <i class="fa-solid fa-leaf absolute top-4 right-4 text-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                        <h3 class="text-[11px] uppercase tracking-[0.3em] font-bold mb-2 group-hover:translate-x-1 transition-transform inline-block">${p.name}</h3>
+                        <p class="text-[10px] text-gray-400 font-light mb-3 tracking-wider">${p.desc}</p>
+                        <p class="text-sm font-light">${p.price} MAD</p>
+                    </div>
+                `).join('');
+            },
+
+            filterProducts() {
+                const query = document.getElementById('shop-search').value.toLowerCase();
+                const filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+                document.getElementById('product-grid').innerHTML = this.renderProductGrid(filtered);
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+
+</body>
+</html>
