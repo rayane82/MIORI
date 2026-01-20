@@ -513,23 +513,48 @@
 
                     case 'about':
                         container.innerHTML = `
-                            <section class="container mx-auto px-6 py-20 max-w-5xl">
-                                <div class="flex flex-col md:flex-row items-center gap-16">
-                                    <div class="w-full md:w-1/2 relative">
-                                        <img src="https://images.unsplash.com/photo-1515377662630-cd495957d073?q=80&w=1000" class="w-full grayscale shadow-sm" alt="MIORI Spirit">
-                                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-[#faf6f2] p-6 flex items-center justify-center border border-black/5">
-                                            <span class="serif text-4xl opacity-20">禪</span>
+                            <section class="container mx-auto px-6 py-20">
+                                <div class="max-w-6xl mx-auto">
+                                    <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24 mb-24">
+                                        <div class="w-full md:w-5/12 relative">
+                                            <img src="https://i.postimg.cc/ZYrv290L/unnamed-(26).jpg" class="w-full shadow-2xl grayscale-[20%] hover:grayscale-0 transition-all duration-700" alt="MIORI Concept Store">
+                                        </div>
+                                        <div class="w-full md:w-7/12">
+                                            <h1 class="text-4xl md:text-5xl serif mb-8 leading-tight italic">Bienvenue chez Miori</h1>
+                                            <p class="text-gray-600 text-sm leading-loose mb-8 font-medium">
+                                                Votre destination dédiée à l’art de vivre et au lifestyle asiatique. Nous avons créé ce concept-store pour les passionnés de design, de douceur et d'innovation, en ramenant le meilleur des tendances d'Asie directement chez vous.
+                                            </p>
+                                            
+                                            <div class="grid grid-cols-1 md:grid-cols-1 gap-10 mt-12">
+                                                <div class="border-l-2 border-black/5 pl-8 py-2">
+                                                    <h3 class="serif text-xl mb-4 italic">Une Immersion dans le Style Asiatique</h3>
+                                                    <div class="space-y-6 text-sm text-gray-500 leading-relaxed">
+                                                        <p><strong class="text-black uppercase tracking-widest text-[10px]">Skincare & Rituels Beauté :</strong> Le secret du teint parfait à travers des soins iconiques et des textures sensorielles venues d'Orient.</p>
+                                                        <p><strong class="text-black uppercase tracking-widest text-[10px]">Bijoux & Éclat :</strong> Des pièces délicates et minimalistes, fidèles à l'esthétique raffinée et discrète de la mode asiatique.</p>
+                                                        <p><strong class="text-black uppercase tracking-widest text-[10px]">Accessoires & Lifestyle :</strong> Des objets du quotidien au design ingénieux et aux packagings irrésistibles, pour une touche de magie dans chaque détail.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="w-full md:w-1/2">
-                                        <h2 class="text-4xl serif mb-8 italic">Le Zen au quotidien.</h2>
-                                        <p class="text-gray-600 text-sm leading-loose mb-8">
-                                            MIORI est né d'un désir de simplification. Dans un monde qui va toujours plus vite, nous avons choisi de revenir à l'essentiel : des ingrédients naturels, des formulations respectueuses et une esthétique apaisante.
-                                        </p>
-                                        <p class="text-gray-600 text-sm leading-loose mb-10">
-                                            Nos rituels sont conçus à Casablanca mais puisent leur âme dans le minimalisme japonais. Pour nous, 2026 marque une nouvelle étape dans notre engagement pour une beauté durable et consciente.
-                                        </p>
-                                        <button onclick="app.navigate('shop')" class="text-[10px] uppercase tracking-[0.3em] font-bold border-b border-black pb-2">Notre Collection</button>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
+                                        <div class="bg-white/50 p-10 md:p-16 border border-black/5">
+                                            <h3 class="serif text-2xl mb-8 italic">L’Excellence à Portée de Tous</h3>
+                                            <p class="text-gray-600 text-sm leading-loose mb-6">
+                                                Notre philosophie est simple : vous permettre d'accéder au meilleur sans compromis. Nous dénichons des produits variés, en mettant un point d'honneur à rendre ce luxe quotidien accessible.
+                                            </p>
+                                            <p class="text-gray-600 text-sm leading-loose">
+                                                Chez Miori, chaque trouvaille est la preuve que la qualité et le style peuvent rester abordables.
+                                            </p>
+                                        </div>
+                                        <div class="py-10">
+                                            <h3 class="serif text-2xl mb-8 italic">Pourquoi Miori ?</h3>
+                                            <p class="text-gray-600 text-sm leading-loose mb-8">
+                                                Parce que nous croyons que les petits objets font les grands bonheurs. Que vous soyez à la recherche d'une routine beauté complète, d'un bijou intemporel ou d'un accessoire nomade, Miori est votre complice pour intégrer la finesse asiatique à votre lifestyle.
+                                            </p>
+                                            <button onclick="app.navigate('shop')" class="btn-miori">Explorer nos trouvailles</button>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
