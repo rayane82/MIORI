@@ -166,6 +166,11 @@
         .text-accent {
             color: var(--miori-accent);
         }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--miori-accent);
+            outline: none;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -329,6 +334,7 @@
             cart: JSON.parse(localStorage.getItem('miori_cart_2026')) || [],
             currentView: 'home',
             currentParams: {},
+            deliveryMethod: 'pickup', // 'home' ou 'pickup'
 
             init() {
                 this.navigate('home');
@@ -412,16 +418,48 @@
             },
 
             calculateTotal() {
-                return this.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                let subtotal = this.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                if (this.currentView === 'checkout' && this.deliveryMethod === 'home') {
+                    subtotal += 20;
+                }
+                return subtotal;
+            },
+
+            updateDelivery(method) {
+                this.deliveryMethod = method;
+                this.render();
             },
 
             sendWhatsApp() {
-                if (this.cart.length === 0) return alert("Votre panier est vide.");
+                const name = document.getElementById('order-name')?.value;
+                const phone = document.getElementById('order-phone')?.value;
+                const address = document.getElementById('order-address')?.value;
+
+                if (!name || !phone) {
+                    return alert("Merci de renseigner votre nom complet et numéro de téléphone.");
+                }
+                if (this.deliveryMethod === 'home' && !address) {
+                    return alert("L'adresse est obligatoire pour la livraison à domicile.");
+                }
+
                 let message = "Commande MIORI ✨\n\n";
+                message += `👤 Nom : ${name}\n`;
+                message += `📞 Tél : ${phone}\n`;
+                message += `🚚 Mode : ${this.deliveryMethod === 'home' ? 'Livraison à domicile (Oujda)' : 'Retrait gratuit'}\n`;
+                if (this.deliveryMethod === 'home') {
+                    message += `📍 Adresse : ${address}\n`;
+                }
+                
+                message += "\n--- Récapitulatif ---\n";
                 this.cart.forEach(item => {
-                    message += `• ${item.qty} x ${item.name} - ${item.price * item.qty} MAD\n`;
+                    message += `• ${item.qty} x ${item.name} (${item.price} MAD/u) = ${item.price * item.qty} MAD\n`;
                 });
-                message += `\nTotal : ${this.calculateTotal()} MAD\n\nMerci de traiter ma commande !`;
+                
+                const subtotal = this.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                message += `\nArticles : ${subtotal} MAD\n`;
+                message += `Livraison : ${this.deliveryMethod === 'home' ? '20' : '0'} MAD\n`;
+                message += `TOTAL : ${this.calculateTotal()} MAD\n\nMerci de traiter ma commande !`;
+                
                 window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
             },
 
@@ -657,15 +695,115 @@
                                     </div>
                                     <div class="bg-gray-50 p-10 space-y-6">
                                         <div class="flex justify-between items-center text-sm uppercase tracking-widest font-bold">
-                                            <span>Total</span>
+                                            <span>Sous-total</span>
                                             <span>${this.calculateTotal()} MAD</span>
                                         </div>
-                                        <button onclick="app.sendWhatsApp()" class="btn-whatsapp w-full py-5 flex items-center justify-center space-x-3 uppercase tracking-[0.2em] text-xs font-bold hover:opacity-90 transition shadow-lg shadow-green-200/50">
-                                            <i class="fa-brands fa-whatsapp text-xl"></i>
-                                            <span>Finaliser sur WhatsApp</span>
+                                        <button onclick="app.navigate('checkout')" class="btn-miori w-full py-5 flex items-center justify-center space-x-3 uppercase tracking-[0.2em] text-xs font-bold hover:opacity-90 transition shadow-lg">
+                                            <span>Commander</span>
                                         </button>
                                     </div>
                                 `}
+                            </section>
+                        `;
+                        break;
+
+                    case 'checkout':
+                        const currentSubtotal = this.cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                        const currentTotal = this.calculateTotal();
+                        container.innerHTML = `
+                            <section class="container mx-auto px-6 max-w-5xl">
+                                <h1 class="text-4xl serif mb-12 italic">Confirmation de commande</h1>
+                                
+                                <div class="flex flex-col lg:flex-row gap-16">
+                                    <!-- FORMULAIRE -->
+                                    <div class="flex-grow space-y-10">
+                                        <div class="bg-white p-8 border border-black/5 space-y-8">
+                                            <h3 class="text-xs uppercase tracking-[0.3em] font-bold border-b border-black/5 pb-4">Vos informations</h3>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                <div class="space-y-2">
+                                                    <label class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Nom Complet *</label>
+                                                    <input type="text" id="order-name" required placeholder="Votre nom et prénom" class="w-full bg-[#faf6f2] p-4 text-sm border-b border-transparent focus:border-black transition">
+                                                </div>
+                                                <div class="space-y-2">
+                                                    <label class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Téléphone *</label>
+                                                    <input type="tel" id="order-phone" required placeholder="Votre numéro WhatsApp" class="w-full bg-[#faf6f2] p-4 text-sm border-b border-transparent focus:border-black transition">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="bg-white p-8 border border-black/5 space-y-8">
+                                            <h3 class="text-xs uppercase tracking-[0.3em] font-bold border-b border-black/5 pb-4">Choix de livraison</h3>
+                                            <div class="space-y-6">
+                                                <div class="flex items-center space-x-4 p-4 cursor-pointer border ${this.deliveryMethod === 'pickup' ? 'border-black shadow-inner' : 'border-black/5'} bg-[#faf6f2] transition-all" onclick="app.updateDelivery('pickup')">
+                                                    <div class="w-4 h-4 rounded-full border-2 border-black flex items-center justify-center p-0.5">
+                                                        <div class="w-full h-full rounded-full ${this.deliveryMethod === 'pickup' ? 'bg-black' : 'bg-transparent'}"></div>
+                                                    </div>
+                                                    <div class="flex-grow">
+                                                        <p class="text-xs font-bold uppercase tracking-widest">Retrait Gratuit</p>
+                                                        <p class="text-[10px] text-gray-400 italic">Lieu de rendez-vous à convenir</p>
+                                                    </div>
+                                                    <span class="text-xs font-bold">Gratuit</span>
+                                                </div>
+
+                                                <div class="flex items-center space-x-4 p-4 cursor-pointer border ${this.deliveryMethod === 'home' ? 'border-black shadow-inner' : 'border-black/5'} bg-[#faf6f2] transition-all" onclick="app.updateDelivery('home')">
+                                                    <div class="w-4 h-4 rounded-full border-2 border-black flex items-center justify-center p-0.5">
+                                                        <div class="w-full h-full rounded-full ${this.deliveryMethod === 'home' ? 'bg-black' : 'bg-transparent'}"></div>
+                                                    </div>
+                                                    <div class="flex-grow">
+                                                        <p class="text-xs font-bold uppercase tracking-widest">Livraison à domicile (Oujda)</p>
+                                                        <p class="text-[10px] text-gray-400 italic">Livraison express locale</p>
+                                                    </div>
+                                                    <span class="text-xs font-bold">+20 MAD</span>
+                                                </div>
+
+                                                ${this.deliveryMethod === 'home' ? `
+                                                    <div class="space-y-2 mt-4 view-transition">
+                                                        <label class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Adresse de livraison à Oujda *</label>
+                                                        <textarea id="order-address" required rows="3" placeholder="Indiquez votre adresse exacte à Oujda..." class="w-full bg-[#faf6f2] p-4 text-sm border-b border-transparent focus:border-black transition"></textarea>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- RECAPITULATIF DÉTAILLÉ -->
+                                    <div class="w-full lg:w-[400px] shrink-0">
+                                        <div class="bg-[#faf6f2] p-8 space-y-8 sticky top-44 border border-black/5">
+                                            <h3 class="text-xs uppercase tracking-[0.3em] font-bold border-b border-black/5 pb-4">Récapitulatif de la commande</h3>
+                                            <div class="space-y-4 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                                ${this.cart.map(item => `
+                                                    <div class="flex justify-between items-start text-xs">
+                                                        <div class="flex-grow pr-4">
+                                                            <p class="font-bold uppercase tracking-widest">${item.name}</p>
+                                                            <p class="text-gray-400 italic">Qté: ${item.qty}</p>
+                                                        </div>
+                                                        <span class="font-bold">${item.price * item.qty} MAD</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                            <div class="border-t border-black/5 pt-6 space-y-4">
+                                                <div class="flex justify-between items-center text-xs uppercase tracking-widest">
+                                                    <span class="opacity-50">Sous-total</span>
+                                                    <span>${currentSubtotal} MAD</span>
+                                                </div>
+                                                <div class="flex justify-between items-center text-xs uppercase tracking-widest">
+                                                    <span class="opacity-50">Frais de livraison</span>
+                                                    <span>${this.deliveryMethod === 'home' ? '20' : '0'} MAD</span>
+                                                </div>
+                                                <div class="flex justify-between items-center text-base font-bold uppercase tracking-widest pt-4 border-t border-black/5">
+                                                    <span>Total</span>
+                                                    <span class="text-accent">${currentTotal} MAD</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <button onclick="app.sendWhatsApp()" class="btn-whatsapp w-full py-5 flex items-center justify-center space-x-3 uppercase tracking-[0.2em] text-xs font-bold hover:opacity-90 transition shadow-lg shadow-green-200/50">
+                                                <i class="fa-brands fa-whatsapp text-xl"></i>
+                                                <span>Finaliser sur WhatsApp</span>
+                                            </button>
+                                            <p class="text-[10px] text-gray-400 text-center italic mt-4">Vous allez être redirigé vers WhatsApp pour confirmer votre commande. Le paiement se fait à la réception.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
                         `;
                         break;
