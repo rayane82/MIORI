@@ -223,9 +223,10 @@
     <footer class="py-16">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
-                <div class="md:col-span-2">
+                <div class="md:col-span-1">
                     <!-- Augmentation de h-20 à h-32 pour agrandir le logo -->
-                    <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-32 mb-6 mx-auto md:mx-0 transition-all duration-300">
+                    <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-32 mb-2 mx-auto md:mx-0 transition-all duration-300">
+                    <p class="opacity-50 font-medium tracking-[0.3em] uppercase text-[10px] mb-6 mx-auto md:mx-0">By Rayane</p>
                     <p class="serif text-sm text-gray-500 italic max-w-xs mx-auto md:mx-0 uppercase tracking-widest">moments made yours</p>
                 </div>
                 <div>
@@ -246,6 +247,17 @@
                     <ul class="text-xs space-y-4 text-gray-600">
                         <li><p class="opacity-50">&copy; 2026 MIORI. Tous droits réservés.</p></li>
                     </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Newsletter</h4>
+                    <p class="text-[10px] text-gray-500 mb-4 italic">Inscrivez-vous pour recevoir nos rituels.</p>
+                    <form onsubmit="app.submitNewsletter(event)" class="relative">
+                        <input type="email" id="newsletter-email" required placeholder="votre@email.com" class="w-full bg-transparent border-b border-black/10 py-3 text-[11px] uppercase tracking-widest outline-none focus:border-accent transition-colors">
+                        <button type="submit" class="absolute right-0 bottom-3 text-accent hover:text-black transition-colors">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <p id="newsletter-msg" class="hidden text-[9px] uppercase tracking-widest text-accent mt-3 italic font-medium">Inscription envoyée !</p>
                 </div>
             </div>
         </div>
@@ -428,6 +440,25 @@
             updateDelivery(method) {
                 this.deliveryMethod = method;
                 this.render();
+            },
+
+            submitNewsletter(event) {
+                event.preventDefault();
+                const email = document.getElementById('newsletter-email').value;
+                const msg = document.getElementById('newsletter-msg');
+                
+                // On utilise Formspree pour envoyer l'email automatiquement sans backend
+                fetch('https://formspree.io/f/azzerayane@gmail.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, subject: 'Nouvelle inscription Newsletter MIORI' })
+                }).finally(() => {
+                    if (msg) {
+                        msg.classList.remove('hidden');
+                        document.getElementById('newsletter-email').value = '';
+                        setTimeout(() => msg.classList.add('hidden'), 5000);
+                    }
+                });
             },
 
             sendWhatsApp() {
