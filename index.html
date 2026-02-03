@@ -90,9 +90,16 @@
             border: 1px solid var(--miori-btn);
         }
 
-        .btn-miori:hover {
+        .btn-miori:not(:disabled):hover {
             background-color: transparent;
             color: var(--miori-dark);
+        }
+
+        .btn-miori:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #e5e7eb;
+            border-color: #e5e7eb;
         }
 
         .btn-whatsapp {
@@ -170,6 +177,24 @@
         input:focus, select:focus, textarea:focus {
             border-color: var(--miori-accent);
             outline: none;
+        }
+
+        .stock-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+        .stock-in {
+            color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .stock-out {
+            color: #ef4444;
+            background-color: #fef2f2;
         }
     </style>
 </head>
@@ -274,7 +299,8 @@
                 desc: "Élégance marine et pureté.", 
                 longDesc: "La Bague Nami capture le mouvement fluide des vagues japonaises. Conçue pour celles qui cherchent une pièce à la fois forte et délicate, elle incarne la sérénité de l'océan.",
                 price: 39, 
-                image: "https://i.postimg.cc/vZddgjXS/Gemini-Generated-Image-zdtqa6zdtqa6zdtq-Photoroom.png" 
+                image: "https://i.postimg.cc/vZddgjXS/Gemini-Generated-Image-zdtqa6zdtqa6zdtq-Photoroom.png",
+                inStock: true
             },
             { 
                 id: 2, 
@@ -282,7 +308,8 @@
                 desc: "Finesse ancestrale et éclat discret.", 
                 longDesc: "Hommage à l'éternité, la Bague Chiyo se distingue par son design intemporel. Un bijou minimaliste qui s'adapte parfaitement à chaque moment de votre vie.",
                 price: 35, 
-                image: "https://i.postimg.cc/Bv0Dzqpy/unnamed-(18)-Photoroom.png" 
+                image: "https://i.postimg.cc/Bv0Dzqpy/unnamed-(18)-Photoroom.png",
+                inStock: true
             },
             { 
                 id: 3, 
@@ -290,7 +317,8 @@
                 desc: "Hydratation instantanée en format voyage.", 
                 longDesc: "Ce mini masque est le secret d'une peau radieuse en toutes circonstances. Sa formule concentrée pénètre instantanément pour restaurer l'éclat et la douceur de votre visage.",
                 price: 12, 
-                image: "https://i.postimg.cc/LXrxQJC2/unnamed-(20)-Photoroom-(1).png" 
+                image: "https://i.postimg.cc/LXrxQJC2/unnamed-(20)-Photoroom-(1).png",
+                inStock: true
             },
             { 
                 id: 4, 
@@ -298,7 +326,8 @@
                 desc: "Éclat céleste et délicatesse.", 
                 longDesc: "Inspiré par la brume matinale, le Collier Kasumi est une pièce d'une finesse rare. Un hommage à la beauté discrète et au raffinement japonais.",
                 price: 45, 
-                image: "https://i.postimg.cc/3NG9p3Z1/unnamed-(21)-Photoroom.png" 
+                image: "https://i.postimg.cc/3NG9p3Z1/unnamed-(21)-Photoroom.png",
+                inStock: false
             },
             { 
                 id: 5, 
@@ -306,7 +335,8 @@
                 desc: "Raffinement pour vos soirées.", 
                 longDesc: "Les boucles Selma marient modernité et élégance classique. Leur design épuré en fait l'accessoire parfait pour sublimer n'importe quel rituel de beauté.",
                 price: 39, 
-                image: "https://i.postimg.cc/tghXr6Cx/unnamed-(22)-Photoroom.png" 
+                image: "https://i.postimg.cc/tghXr6Cx/unnamed-(22)-Photoroom.png",
+                inStock: true
             },
             { 
                 id: 6, 
@@ -314,7 +344,8 @@
                 desc: "Nutrition intense et douceur.", 
                 longDesc: "Un coffret concentré de bienfaits. L'avocat nourrit votre peau en profondeur pour un teint revitalisé et une douceur incomparable.",
                 price: 59, 
-                image: "https://i.postimg.cc/FR3Dk9pk/unnamed-(23)-Photoroom.png" 
+                image: "https://i.postimg.cc/FR3Dk9pk/unnamed-(23)-Photoroom.png",
+                inStock: true
             },
             { 
                 id: 7, 
@@ -322,7 +353,8 @@
                 desc: "Éclat fruité et fraîcheur.", 
                 longDesc: "Retrouvez l'éclat d'un teint de pêche. Cette mini box est le rituel idéal pour une peau fraîche, hydratée et délicatement parfumée.",
                 price: 59, 
-                image: "https://i.postimg.cc/FHzpgbGv/unnamed-(24)-Photoroom.png" 
+                image: "https://i.postimg.cc/FHzpgbGv/unnamed-(24)-Photoroom.png",
+                inStock: true
             },
             { 
                 id: 8, 
@@ -330,7 +362,8 @@
                 desc: "L'onctuosité de la soie.", 
                 longDesc: "Une crème onctueuse infusée aux fleurs de cerisier. Sa texture soyeuse enveloppe la peau d'un voile d'hydratation et de douceur.",
                 price: 49, 
-                image: "https://i.postimg.cc/RZm6vv6X/unnamed-(25)-Photoroom.png" 
+                image: "https://i.postimg.cc/RZm6vv6X/unnamed-(25)-Photoroom.png",
+                inStock: true
             },
             { 
                 id: 9, 
@@ -338,7 +371,8 @@
                 desc: "Éclat doré et design contemporain.", 
                 longDesc: "La Bague Nouha est une célébration de la modernité. Son design unique et sa finition impeccable en font un accessoire indispensable pour celles qui aiment se démarquer avec subtilité.",
                 price: 39, 
-                image: "https://i.postimg.cc/261wgnLC/unnamed-(28)-Photoroom.png" 
+                image: "https://i.postimg.cc/261wgnLC/unnamed-(28)-Photoroom.png",
+                inStock: true
             }
         ];
 
@@ -398,6 +432,8 @@
 
             addToCart(productId) {
                 const product = PRODUCTS.find(p => p.id === productId);
+                if (!product.inStock) return; // Prevent adding if out of stock
+                
                 const existing = this.cart.find(item => item.id === productId);
                 if (existing) existing.qty += 1;
                 else this.cart.push({ ...product, qty: 1 });
@@ -405,11 +441,29 @@
                 this.saveCart();
                 this.updateCartUI();
                 
+                // Detailed notification logic
                 const notification = document.createElement('div');
-                notification.className = 'fixed bottom-10 right-10 bg-black text-white px-6 py-3 text-xs uppercase tracking-widest z-[100] view-transition';
-                notification.innerText = "Ajouté au panier";
+                notification.className = 'fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-white border border-black/5 p-4 flex items-center space-x-4 shadow-2xl z-[100] view-transition max-w-[280px] md:max-w-sm';
+                notification.innerHTML = `
+                    <div class="w-16 h-20 flex-shrink-0 bg-gray-50 overflow-hidden">
+                        <img src="${product.image}" class="w-full h-full object-cover grayscale-[20%]" alt="${product.name}">
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-[10px] uppercase tracking-widest text-accent font-bold mb-1">Ajouté au panier</p>
+                        <p class="text-[11px] font-bold uppercase tracking-tight mb-3 line-clamp-1">${product.name}</p>
+                        <button onclick="app.navigate('cart'); this.closest('.view-transition').remove();" class="text-[9px] uppercase tracking-[0.2em] font-bold border-b border-black pb-1 hover:opacity-50 transition">Voir mon panier</button>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="text-gray-300 hover:text-black transition-colors px-2 self-start mt-[-4px] mr-[-4px]">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                `;
+                
+                // Remove previous notifications if any
+                const oldNotes = document.querySelectorAll('.view-transition.fixed');
+                oldNotes.forEach(n => n.remove());
+
                 document.body.appendChild(notification);
-                setTimeout(() => notification.remove(), 2000);
+                setTimeout(() => { if(notification.parentElement) notification.remove(); }, 6000);
             },
 
             removeFromCart(productId) {
@@ -621,12 +675,19 @@
                                     </div>
                                     <div class="w-full md:w-1/2">
                                         <h1 class="text-4xl md:text-5xl serif mb-4 italic">${p.name}</h1>
-                                        <p class="text-2xl font-light mb-8">${p.price} MAD</p>
+                                        <p class="text-2xl font-light mb-4">${p.price} MAD</p>
+                                        <div class="mb-8">
+                                            <span class="stock-badge ${p.inStock ? 'stock-in' : 'stock-out'}">
+                                                ${p.inStock ? 'En stock' : 'Épuisé'}
+                                            </span>
+                                        </div>
                                         <div class="border-t border-b border-black/5 py-10 mb-10">
                                             <h3 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-4">Description</h3>
                                             <p class="text-gray-500 text-sm leading-relaxed">${p.longDesc}</p>
                                         </div>
-                                        <button onclick="app.addToCart(${p.id})" class="btn-miori w-full md:w-auto px-16 py-5">Ajouter au Panier</button>
+                                        <button onclick="app.addToCart(${p.id})" ${!p.inStock ? 'disabled' : ''} class="btn-miori w-full md:w-auto px-16 py-5">
+                                            ${p.inStock ? 'Ajouter au Panier' : 'Épuisé'}
+                                        </button>
                                         
                                         <div class="mt-16 space-y-6">
                                             <div class="flex items-center space-x-4 opacity-40">
@@ -848,10 +909,17 @@
                         <div class="aspect-[4/5] bg-gray-50 overflow-hidden mb-6 relative">
                             <img src="${p.image}" class="w-full h-full object-cover" alt="${p.name}">
                             <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            ${!p.inStock ? `
+                                <div class="absolute top-4 right-4 z-10">
+                                    <span class="stock-badge stock-out">Épuisé</span>
+                                </div>
+                            ` : ''}
                         </div>
-                        <h3 class="text-[11px] uppercase tracking-[0.3em] font-bold mb-2 group-hover:translate-x-1 transition-transform inline-block">${p.name}</h3>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-[11px] uppercase tracking-[0.3em] font-bold group-hover:translate-x-1 transition-transform inline-block">${p.name}</h3>
+                        </div>
                         <p class="text-[10px] text-gray-400 font-light mb-3 tracking-wider">${p.desc}</p>
-                        <p class="text-sm font-light">${p.price} MAD</p>
+                        <p class="text-sm font-light ${!p.inStock ? 'opacity-50' : ''}">${p.price} MAD</p>
                     </div>
                 `).join('');
             },
@@ -862,10 +930,15 @@
                         <div class="aspect-[4/5] bg-gray-50 overflow-hidden mb-6 relative shadow-sm">
                             <img src="${p.image}" class="w-full h-full object-cover" alt="${p.name}">
                             <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            ${!p.inStock ? `
+                                <div class="absolute top-4 right-4 z-10">
+                                    <span class="stock-badge stock-out">Épuisé</span>
+                                </div>
+                            ` : ''}
                         </div>
                         <h3 class="text-[11px] uppercase tracking-[0.3em] font-bold mb-2 group-hover:translate-x-1 transition-transform inline-block">${p.name}</h3>
                         <p class="text-[10px] text-gray-400 font-light mb-3 tracking-wider line-clamp-1">${p.desc}</p>
-                        <p class="text-sm font-light">${p.price} MAD</p>
+                        <p class="text-sm font-light ${!p.inStock ? 'opacity-50' : ''}">${p.price} MAD</p>
                     </div>
                 `).join('');
             },
