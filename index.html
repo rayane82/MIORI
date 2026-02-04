@@ -247,20 +247,12 @@
     <!-- FOOTER -->
     <footer class="py-16">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
                 <div class="md:col-span-1">
                     <!-- Augmentation de h-20 à h-32 pour agrandir le logo -->
                     <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-32 mb-2 mx-auto md:mx-0 transition-all duration-300">
                     <p class="opacity-50 font-medium tracking-[0.3em] uppercase text-[10px] mb-6 mx-auto md:mx-0">By Rayane</p>
                     <p class="serif text-sm text-gray-500 italic max-w-xs mx-auto md:mx-0 uppercase tracking-widest">moments made yours</p>
-                </div>
-                <div>
-                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Navigation</h4>
-                    <ul class="text-xs space-y-4 text-gray-600">
-                        <li><a href="javascript:void(0)" onclick="app.navigate('home')" class="hover:text-black">Accueil</a></li>
-                        <li><a href="javascript:void(0)" onclick="app.navigate('shop')" class="hover:text-black">Boutique</a></li>
-                        <li><a href="javascript:void(0)" onclick="app.navigate('about')" class="hover:text-black">Philosophie</a></li>
-                    </ul>
                 </div>
                 <div>
                     <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Suivez-nous</h4>
@@ -275,14 +267,14 @@
                 </div>
                 <div>
                     <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Newsletter</h4>
-                    <p class="text-[10px] text-gray-500 mb-4 italic">Inscrivez-vous pour recevoir nos rituels.</p>
+                    <p class="text-[10px] text-gray-500 mb-4 italic">Inscrivez-vous pour recevoir nos nouveautés en avance.</p>
                     <form onsubmit="app.submitNewsletter(event)" class="relative">
                         <input type="email" id="newsletter-email" required placeholder="votre@email.com" class="w-full bg-transparent border-b border-black/10 py-3 text-[11px] uppercase tracking-widest outline-none focus:border-accent transition-colors">
                         <button type="submit" class="absolute right-0 bottom-3 text-accent hover:text-black transition-colors">
                             <i class="fa-solid fa-paper-plane"></i>
                         </button>
                     </form>
-                    <p id="newsletter-msg" class="hidden text-[9px] uppercase tracking-widest text-accent mt-3 italic font-medium">Inscription envoyée !</p>
+                    <p id="newsletter-msg" class="hidden text-[9px] uppercase tracking-widest text-accent mt-3 italic font-medium">Redirection WhatsApp...</p>
                 </div>
             </div>
         </div>
@@ -333,7 +325,7 @@
                 id: 5, 
                 name: "Boucles Selma", 
                 desc: "Raffinement pour vos soirées.", 
-                longDesc: "Les boucles Selma marient modernité et élégance classique. Leur design épuré en fait l'accessoire parfait pour sublimer n'importe quel rituel de beauté.",
+                longDesc: "Les boucles Selma marient modernité et élégance classique. Leur design épuré en fait l'accessoire parfait pour sublimer votre routine beauté.",
                 price: 39, 
                 image: "https://i.postimg.cc/tghXr6Cx/unnamed-(22)-Photoroom.png",
                 inStock: true
@@ -351,7 +343,7 @@
                 id: 7, 
                 name: "Mini Box K-Beauty Peach", 
                 desc: "Éclat fruité et fraîcheur.", 
-                longDesc: "Retrouvez l'éclat d'un teint de pêche. Cette mini box est le rituel idéal pour une peau fraîche, hydratée et délicatement parfumée.",
+                longDesc: "Retrouvez l'éclat d'un teint de pêche. Cette mini box est le soin idéal pour une peau fraîche, hydratée et délicatement parfumée.",
                 price: 59, 
                 image: "https://i.postimg.cc/FHzpgbGv/unnamed-(24)-Photoroom.png",
                 inStock: true
@@ -501,18 +493,15 @@
                 const email = document.getElementById('newsletter-email').value;
                 const msg = document.getElementById('newsletter-msg');
                 
-                // On utilise Formspree pour envoyer l'email automatiquement sans backend
-                fetch('https://formspree.io/f/azzerayane@gmail.com', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, subject: 'Nouvelle inscription Newsletter MIORI' })
-                }).finally(() => {
-                    if (msg) {
-                        msg.classList.remove('hidden');
-                        document.getElementById('newsletter-email').value = '';
-                        setTimeout(() => msg.classList.add('hidden'), 5000);
-                    }
-                });
+                // Envoi via redirection WhatsApp au numéro spécifié
+                const whatsappMsg = `Nouvelle inscription à la newsletter MIORI ✨\n\nEmail : ${email}`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
+                
+                if (msg) {
+                    msg.classList.remove('hidden');
+                    document.getElementById('newsletter-email').value = '';
+                    setTimeout(() => msg.classList.add('hidden'), 5000);
+                }
             },
 
             sendWhatsApp() {
@@ -723,7 +712,7 @@
                                                 <div class="border-l-2 border-black/5 pl-8 py-2">
                                                     <h3 class="serif text-xl mb-4 italic">Une Immersion dans le Style Asiatique</h3>
                                                     <div class="space-y-6 text-sm text-gray-500 leading-relaxed">
-                                                        <p><strong class="text-black uppercase tracking-widest text-[10px]">Skincare & Rituels Beauté :</strong> Le secret du teint parfait à travers des soins iconiques et des textures sensorielles venues d'Orient.</p>
+                                                        <p><strong class="text-black uppercase tracking-widest text-[10px]">Skincare & Soins Beauté :</strong> Le secret du teint parfait à travers des soins iconiques et des textures sensorielles venues d'Orient.</p>
                                                         <p><strong class="text-black uppercase tracking-widest text-[10px]">Bijoux & Éclat :</strong> Des pièces délicates et minimalistes, fidèles à l'esthétique raffinée et discrète de la mode asiatique.</p>
                                                         <p><strong class="text-black uppercase tracking-widest text-[10px]">Accessoires & Lifestyle :</strong> Des objets du quotidien au design ingénieux et aux packagings irrésistibles, pour une touche de magie dans chaque detail.</p>
                                                     </div>
